@@ -55,22 +55,31 @@ def _count_neighbors(grid, i, j):
     return neighbors
 
 def iterate_grid(grid):
+    live = []
+    def is_active(grid, i, j):
+        return grid[i][j] == 0
+
     gridAtStart = copy.deepcopy(grid)
     for i in range(len(grid)):
         for j in range(len(grid)):
             if gridAtStart[i][j] == []:
                 grid[i][j] = empty_cell(gridAtStart, i, j)
+                if is_active(grid, i, j):
+                    live.append((i,j))
             else:
                 grid[i][j] = non_empty_cell(gridAtStart, i, j)
+                if is_active(grid, i, j):
+                    live.append((i,j))
+    return live
 
-grid = init_grid(70)
-grid[30][30] = 0
-grid[30][33] = 0
-grid[31][30] = 0
-grid[31][31] = 0
-grid[32][30] = 0
-grid[32][32] = 0
-grid[33][33] = 0
+grid = init_grid(20)
+grid[10][10] = 0
+grid[10][13] = 0
+grid[11][10] = 0
+grid[11][11] = 0
+grid[12][10] = 0
+grid[12][12] = 0
+grid[13][13] = 0
 print_grid(grid)
 for i in range(10):
     print '-'*30
