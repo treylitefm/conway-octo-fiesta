@@ -54,21 +54,31 @@ def _count_neighbors(grid, i, j):
 
     return neighbors
 
+def _is_active(grid, i, j):
+    return grid[i][j] == 0
+
+def live_cells(grid):
+    live = []
+
+    for i in range(len(grid)):
+        for j in range(len(grid)):
+            if _is_active(grid, i, j):
+                live.append((i,j))
+    return live
+
 def iterate_grid(grid):
     live = []
-    def is_active(grid, i, j):
-        return grid[i][j] == 0
 
     gridAtStart = copy.deepcopy(grid)
     for i in range(len(grid)):
         for j in range(len(grid)):
             if gridAtStart[i][j] == []:
                 grid[i][j] = empty_cell(gridAtStart, i, j)
-                if is_active(grid, i, j):
+                if _is_active(grid, i, j):
                     live.append((i,j))
             else:
                 grid[i][j] = non_empty_cell(gridAtStart, i, j)
-                if is_active(grid, i, j):
+                if _is_active(grid, i, j):
                     live.append((i,j))
     return live
 
