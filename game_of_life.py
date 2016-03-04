@@ -66,8 +66,10 @@ def live_cells(grid):
                 live.append((i,j))
     return live
 
-def iterate_grid(grid):
+def iterate_grid(grid, foresight=None):
     live = []
+    foresight = False if foresight == None or foresight == False else True
+    print foresight, 'yoo'
 
     gridAtStart = copy.deepcopy(grid)
     for i in range(len(grid)):
@@ -75,12 +77,26 @@ def iterate_grid(grid):
             if gridAtStart[i][j] == []:
                 grid[i][j] = empty_cell(gridAtStart, i, j)
                 if _is_active(grid, i, j):
-                    live.append((i,j))
+                    live.append([i,j])
             else:
                 grid[i][j] = non_empty_cell(gridAtStart, i, j)
                 if _is_active(grid, i, j):
-                    live.append((i,j))
-    return live
+                    live.append([i,j])
+
+    if foresight:
+        will_live = []
+        for i,j in live:
+            n = _count_neighbors(grid, i, j)
+            if n == 1 or n == 0 or n >= 4:
+                will_live.append(False)
+            else:
+                will_live.append(True)
+
+    if not foresight:
+        return map(lambda p: (p[0],p[1]), live)
+    else:
+        return map(lambda p,i: (p[0],p[1],i), live, will_live)
+
 
 def populate(grid, points):
     for i,j in points:
@@ -91,10 +107,22 @@ def main():
     grid = init_grid(20)
     populate(grid, [(10, 10), (10, 13), (11, 10), (11, 11), (12, 10), (12, 12), (13, 13)])
 
-    print_grid(grid)
-    for i in range(10):
+#    print_grid(grid)
+    y1,x1 = zip(*live_cells(grid))
+    print list(x1)
+    print list(y1)
+
+    for i in range(18):
         print '-'*30
-        iterate_grid(grid)
+        cells = iterate_grid(grid, foresight=True)
+        print cells
+
+        #y1,x1 = zip(*live_cells(grid))
+        y1,x1,will_live = zip(*cells)
+        print i
+        print list(x1)
+        print list(y1)
+        print list(will_live)
         print_grid(grid)
 
 
