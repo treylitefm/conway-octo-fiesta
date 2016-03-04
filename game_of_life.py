@@ -57,14 +57,27 @@ def _count_neighbors(grid, i, j):
 def _is_active(grid, i, j):
     return grid[i][j] == 0
 
-def live_cells(grid):
+def live_cells(grid, foresight=None):
     live = []
 
     for i in range(len(grid)):
         for j in range(len(grid)):
             if _is_active(grid, i, j):
                 live.append((i,j))
-    return live
+
+    if foresight: #i should pull this out into a function. logic is duplicated
+        will_live = []
+        for i,j in live:
+            n = _count_neighbors(grid, i, j)
+            if n == 1 or n == 0 or n >= 4:
+                will_live.append(False)
+            else:
+                will_live.append(True)
+
+    if not foresight:
+        return map(lambda p: (p[0],p[1]), live)
+    else:
+        return map(lambda p,i: (p[0],p[1],i), live, will_live)
 
 def iterate_grid(grid, foresight=None):
     live = []
