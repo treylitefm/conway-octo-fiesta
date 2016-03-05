@@ -20,15 +20,15 @@ def print_grid(grid):
             row = row + str(j if j == [] else [j]) + '\t'
         print row + '\n'
 
-def empty_cell(grid, i, j):
-    neighbors = _count_neighbors(grid, i, j)
+def _empty_cell(grid, i, j):
+    neighbors = count_neighbors(grid, i, j)
     return 0 if neighbors == 3 else []
 
-def non_empty_cell(grid, i, j):
-    neighbors = _count_neighbors(grid, i, j)
+def _non_empty_cell(grid, i, j):
+    neighbors = count_neighbors(grid, i, j)
     return 0 if neighbors == 2 or neighbors == 3 else []
 
-def _count_neighbors(grid, i, j):
+def count_neighbors(grid, i, j):
     neighbors = 0
     if i-1 >= 0:
         if j-1 >= 0:
@@ -68,7 +68,7 @@ def live_cells(grid, foresight=None):
     if foresight: #i should pull this out into a function. logic is duplicated
         will_live = []
         for i,j in live:
-            n = _count_neighbors(grid, i, j)
+            n = count_neighbors(grid, i, j)
             if n == 1 or n == 0 or n >= 4:
                 will_live.append(False)
             else:
@@ -82,24 +82,23 @@ def live_cells(grid, foresight=None):
 def iterate_grid(grid, foresight=None):
     live = []
     foresight = False if foresight == None or foresight == False else True
-    print foresight, 'yoo'
 
     gridAtStart = copy.deepcopy(grid)
     for i in range(len(grid)):
         for j in range(len(grid)):
             if gridAtStart[i][j] == []:
-                grid[i][j] = empty_cell(gridAtStart, i, j)
+                grid[i][j] = _empty_cell(gridAtStart, i, j)
                 if _is_active(grid, i, j):
                     live.append([i,j])
             else:
-                grid[i][j] = non_empty_cell(gridAtStart, i, j)
+                grid[i][j] = _non_empty_cell(gridAtStart, i, j)
                 if _is_active(grid, i, j):
                     live.append([i,j])
 
     if foresight:
         will_live = []
         for i,j in live:
-            n = _count_neighbors(grid, i, j)
+            n = count_neighbors(grid, i, j)
             if n == 1 or n == 0 or n >= 4:
                 will_live.append(False)
             else:
