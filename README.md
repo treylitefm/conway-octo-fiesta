@@ -3,7 +3,7 @@ What's up, and welcome to my very own Game of Life animation. If you'd like to r
 
     python conway-animation.py 
 
-The rules, an interactive animation and little backstory can all be found [here].
+The rules, an interactive animation and a little backstory can all be found [here].
 
 ## Running the unittests
 Easy! Simply run:
@@ -12,7 +12,7 @@ Easy! Simply run:
 
 ## Bonus
 
-John Conway is an awesome mathematician. Feel free to read up on him on [wikipedia]. Personally, my favorite concotion of is the [Doomsday algorithm]. Cool party trick, no?
+John Conway is an awesome mathematician. Feel free to read up on him on [wikipedia]. Personally, my favorite concotion of his is the [Doomsday algorithm]. Cool party trick, no?
 
 [here]: <http://www.bitstorm.org/gameoflife/>
 [wikipedia]: <https://en.wikipedia.org/wiki/John_Horton_Conway>
