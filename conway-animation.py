@@ -7,13 +7,15 @@ import time
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib import animation
+import json
 
 def main():
-    #numframes = 100
+    with open('templates.json', 'r') as json_data:
+        templates = json.load(json_data)
 
     fig = plt.figure()
     
-    grid = init_grid(20); populate(grid, [(10, 10), (10, 13), (11, 10), (11, 11), (12, 10), (12, 12), (13, 13)])
+    grid = init_grid(20); populate(grid, templates['sample0'])
 
     points = live_cells(grid, foresight=True)
     y1,x1,will_live = zip(*points)
